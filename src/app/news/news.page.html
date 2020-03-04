@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>News</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card *ngFor="let new_s of news" (click)="onGoToNewsSinglePage(new_s)">
+    <ion-img [src]="new_s.image_url"></ion-img>
+    <ion-card-content>
+      <ion-card-title>{{new_s.title}}</ion-card-title>
+      <p>{{new_s.content}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-infinite-scroll (ionInfinite)="loadMoreNews($event)" threshold="100px" id="infinite-scroll">
+    <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading news..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+  
+</ion-content>

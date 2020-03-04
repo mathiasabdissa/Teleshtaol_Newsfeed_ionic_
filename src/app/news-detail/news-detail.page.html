@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>News Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+    <ion-img [src]="news.image_url"></ion-img>
+    <ion-card-header>
+      <ion-card-title>
+        {{news.title}}
+      </ion-card-title>
+      <ion-card-subtitle>{{news.created_at|date}}</ion-card-subtitle>
+      <ion-card-subtitle>Category | Christian News</ion-card-subtitle>
+      <ion-card-subtitle>Video Url   <a href="{{news.video_url}}">{{news.video_url}}</a></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      {{news.content}}
+    </ion-card-content>
+    <!-- <button class="btn" [ngClass]="{ 'btn-add': like, 'btn-remove': !like  }"> 
+    </button>-->
+   <!--  <ion-textarea clearOnEdit="true" [(ngModel)]="news_list.liked_by_auth_user"
+      placeholder="Enter your Comment here..."></ion-textarea> -->
+    <ion-label  style="margin-left: 20px;"> {{news.likes_count}} Likes | {{news.comments_count}} Comment</ion-label>
+    <!-- 4likes 12 comment -->
+    <ion-item *ngFor="let comment of newses">
+      <ion-avatar slot="start">
+        <img src="assets/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{comment.user.name}} </h3>
+        <p>{{comment.comment}}</p>
+      </ion-label>
+    </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button *ngIf="!like" size="small" color="secondary" (click)="Like()">
+            <ion-icon name="thumbs-up"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="like" size="small" color="secondary" (click)="UnLike()">
+            <ion-icon name="thumbs-down"></ion-icon>
+
+            <!-- <ion-icon *ngIf="like;else dislike" name="thumbs-down"></ion-icon>
+            <ng-template #dislike>
+              <ion-icon name="thumbs-up"></ion-icon>
+            </ng-template> -->
+          </ion-button>
+          
+        </ion-col>
+        <ion-col>
+          <ion-button size="small" color="danger" (click)="onComment()">
+            <ion-icon name="text"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <form action="" class="inset" style="margin: 10px;">
+          <ion-item *ngIf="commenting">
+            <ion-label></ion-label>
+            <ion-textarea type="text" clearOnEdit="true" #art="ngModel" id="comment" [(ngModel)]="news_list.comment" name="comment" placeholder="Enter your Comment here..."></ion-textarea>
+            <br>
+            <ion-button size="small"  type="submit" (click)="onCommentSummit();">Comment</ion-button>
+            <ion-button size="small" color="warning" (click)="onCancel()">Cancel</ion-button>
+          </ion-item>
+        </form>
+        <ion-col align-self-center text-center>
+          <ion-note>
+          </ion-note>
+        </ion-col>
+      </ion-row>
+  </ion-card>
+</ion-content>

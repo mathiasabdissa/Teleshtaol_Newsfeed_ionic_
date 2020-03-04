@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-avatar class="ion-margin-start" style="margin-left: 150px;margin-top: 40px;">
+    <img src="assets/avatar.svg">
+  </ion-avatar>
+  <form [formGroup]="credentialsForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating" style="margin-left: 10px;">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label position="floating" style="margin-left: 10px;">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+ 
+    <ion-button  type="submit" [disabled]="!credentialsForm.valid" style="margin-left: 100px;">Login</ion-button>
+    <ion-button  type="button" (click)="register()">Register</ion-button>
+ 
+  </form>
+</ion-content>

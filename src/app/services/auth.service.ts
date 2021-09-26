@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 import { Storage } from '@ionic/storage';
+import { User } from '../setting/users.objects';
 
 
 const TOKEN_KEY = 'access_token';
@@ -17,7 +18,8 @@ const url = environment.url;
 })
 
 export class AuthService {
-
+  public UserProfileDataEmitter = new EventEmitter<User[]>(); 
+  headers = new Headers({ 'Content-Type': 'application/json' });
   //url = environment.url;
   user = null; //user object
   authenticationState = new BehaviorSubject(false);
@@ -37,7 +39,22 @@ export class AuthService {
      });
      }
      getprofile() {
-      return this.http.get(`${url}/api/mobme?token=` + localStorage.getItem("access_token"));
+         
+      return this.http.get(`${url}/api/mobme?token=` + localStorage.getItem("access_token")).subscribe(
+        data => {
+          this.processProfileData(data);
+        },
+        error => {
+            console.log(error);
+        },
+    );
+    }
+    private processProfileData(dash_data) {
+      
+      if(dash_data && dash_data.status && dash_data.users){
+        console.log(dash_data);
+          this.UserProfileDataEmitter.emit(dash_data.users);
+      }
     }
 
     checkToken() {
@@ -109,34 +126,11 @@ export class AuthService {
       alert.then(alert => alert.present());
     }
     logout() {
+      localStorage.clear();
       this.storage.remove(TOKEN_KEY).then(() => {
         this.authenticationState.next(false);
       });
     }
-
-
-
-
-
-
-    //this is previously done
-
-
-
-
-
-    
-    /* public login(login_data){
-      if(login_data){
-        this.autheticate_emiter.emit(true);
-        this.is_authenticated = true;
-        console.log(login_data);
-      }else {
-        this.autheticate_emiter.emit(false);
-        this.is_authenticated = false;
-      }
-    } */
-
     public storeUserToken( user_token: string ) {
       localStorage.setItem('token', user_token);
     }
@@ -151,6 +145,7 @@ export class AuthService {
         return false;
        }
      }
+     
 
 
 }

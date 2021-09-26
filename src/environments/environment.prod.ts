@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url:'https://d3f8f408.ngrok.io',
-  //url:'http://192.168.0.99:8000'
+  //url:'http://2b49a6ff.ngrok.io', //Global production--ngrok
+  url:'http://localhost:8000' //local production
 };

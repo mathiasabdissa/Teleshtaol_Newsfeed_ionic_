@@ -4,14 +4,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list-header style="margin-left: 140px;">Profile</ion-list-header>
-  <!-- <ion-avatar class="ion-margin-start" style="margin-left: 160px;">
-    <img src="assets/avatarsetting.svg">
-  </ion-avatar> -->
-  <img src="assets/avatarsetting.png" style="margin-left: 145px;">
-  <div style="margin-left: 120px;">
-    <p>Profile: User</p>
-    <p>Email:_____</p>
+  <ion-list-header style="display:block; text-align:center; margin-top: 10px;">User Profile</ion-list-header>
+  <img src="assets/avatarsetting.png" style="margin: 10px auto 20px; display: block;">
+  <div style="display:block;text-align:center;">
+    <p>User Name:{{user_data.name}}</p>
+    <p>Email:{{user_data.email}}</p>
+    <p>Password:******</p>
   </div>
-  <ion-button size="small" color="danger" style="margin-left: 140px;">Logout</ion-button>
+  <div class="center">
+    <ion-button size="small" color="danger" >Edit</ion-button>
+    <ion-button size="small" color="danger"(click)="logout()">Logout</ion-button>
+  </div>
 </ion-content>

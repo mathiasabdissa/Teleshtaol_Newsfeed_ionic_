@@ -1,6 +1,6 @@
 <ion-tabs>
 
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" class="tabs-icon-text" [color]="isAndroid ? 'royal' : 'medium'">
     <ion-tab-button tab="news">
       <ion-icon name="paper"></ion-icon>
       <ion-label>News</ion-label>
@@ -12,9 +12,17 @@
     </ion-tab-button>
 
     <ion-tab-button tab="setting">
-      <ion-icon name="settings"></ion-icon>
+      <ion-icon name="magnet"></ion-icon>
       <ion-label>Setting</ion-label>
     </ion-tab-button>
+    
+
   </ion-tab-bar>
+  <!-- <ion-tabs class="tabs-icon-text" [color]="isAndroid ? 'royal' : 'primary'">
+    <ion-tab tabIcon="water" tabTitle="Water" [root]="rootPage"></ion-tab>
+    <ion-tab tabIcon="leaf" tabTitle="Life" [root]="rootPage"></ion-tab>
+    <ion-tab tabIcon="flame" tabTitle="Fire" [root]="rootPage"></ion-tab>
+    <ion-tab tabIcon="magnet" tabTitle="Force" [root]="rootPage"></ion-tab>
+  </ion-tabs> -->
 
 </ion-tabs>

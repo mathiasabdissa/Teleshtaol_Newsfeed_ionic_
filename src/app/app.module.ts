@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { JwtHelperService,JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';  
 import { IonicStorageModule,Storage } from '@ionic/storage';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -31,6 +31,7 @@ export function jwtOptionsFactory(storage) {
     AppRoutingModule,
     HttpClientModule,
     HttpModule,
+    ReactiveFormsModule,
     IonicStorageModule.forRoot(),
     JwtModule.forRoot({
       jwtOptionsProvider: {

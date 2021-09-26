@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Injectable, OnInit } from '@angular/core';
 import { NewsService } from '../news.service';
 import { News } from '../news.interface';
 import { NewsObject } from '../news.objects';
@@ -8,7 +8,10 @@ import { AuthService } from '../services/auth.service';
 import { AlertController } from '@ionic/angular';
 import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
-
+import { NewsPage } from '../news/news.page';
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-news-detail',
   templateUrl: './news-detail.page.html',
@@ -18,7 +21,7 @@ export class NewsDetailPage implements OnInit {
   public news_comment = new NewsObject();
   commentForm: FormGroup;
   news = new NewsObject();
-  newses: News[];
+  comments: Comment[];
   comment = new NewsObject();
   article;
   commenting = false;
@@ -32,6 +35,7 @@ export class NewsDetailPage implements OnInit {
     private authService: AuthService,
     private http: Http,
     private storage:Storage,
+    private newpage:NewsPage,
     private formBuilder: FormBuilder,
     private alertController: AlertController) { }
 
@@ -41,21 +45,26 @@ export class NewsDetailPage implements OnInit {
     this.news_list = this.news;
     this.like=this.news_list.liked_by_auth_user;
     const id = this.news_list.id;
-    console.log(this.news_list.liked_by_auth_user);
-    console.log(this.like);
+    //console.log(this.news_list.liked_by_auth_user);
+    //console.log(this.like);
     this.commentForm = this.formBuilder.group({
       comment: [],
     });
     this.newsService.getcomments(id).subscribe(
-      (newses:News[])=>this.newses=newses,
+      (comments:Comment[])=>this.comments=comments,
     );
 
-    console.log(id);
+   // console.log(id);
+  }
+  false(){
+    this.like=false;
+    this.commenting=false;
   }
   onCommentSummit(){
     this.newsService.comment(this.news_list).subscribe(
       data=>{
-       console.log('works'); 
+       console.log('works');
+       this.router.navigate(['/tabs/news']); 
       }
     );
    // console.log(this.news_comment.comment);
@@ -77,19 +86,15 @@ export class NewsDetailPage implements OnInit {
     this.commenting = false;
   }
   Like() {
-    
-    //this.like = false;
     if (this.authService.isAuthenticated()) {
       this.newsService.like(this.news_list).subscribe(
         data=>{
-          this.showAlertSuccess('Thank you for the like');
-          console.log('works');
+          this.newpage.reload();
           //this.like = false;
         }
       );
-     
-      //console.log(this.news_list.id);
-      //this.authService.logout();
+      this.showAlertSuccess('Liked');
+      
     } else {
       this.showAlert('Login First');
       console.log('Not Authenticated');
@@ -103,11 +108,13 @@ export class NewsDetailPage implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.newsService.unlike(this.news_list).subscribe(
         data=>{
-          console.log('works');
+          console.log('unlike');
+          this.newpage.reload();
+          //this.router.navigate(['/tabs/news']);
           //this.like = false;
         }
       );
-      this.showAlertSuccess('Thank you for the unlike');
+      this.showAlertSuccess('unliked');
       //console.log(this.news_list.id);
       //this.authService.logout();
     } else {
@@ -120,6 +127,7 @@ export class NewsDetailPage implements OnInit {
   Comment(){
     if (this.authService.isAuthenticated()) {
       this.showAlertSuccess('Comment works');
+      
     }else {
       this.showAlert('Login First');
       console.log('Not Authenticated');
